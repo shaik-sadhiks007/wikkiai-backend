@@ -14,9 +14,33 @@ dotenv.config()
 
 const app = express()
 const port = process.env.PORT || 5000
+
+// CORS Configuration
 const clientOrigins = process.env.CLIENT_URL?.split(",").map((url) => url.trim()) || ["http://localhost:5173"]
 
-app.use(cors({ origin: clientOrigins, credentials: true }))
+// Enhanced CORS to support Vercel preview deployments
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true)
+
+    // Check if origin is in the allowed list
+    if (clientOrigins.indexOf(origin) !== -1) {
+      return callback(null, true)
+    }
+
+    // Allow all Vercel preview deployments (*.vercel.app)
+    if (origin.endsWith('.vercel.app')) {
+      return callback(null, true)
+    }
+
+    // Reject other origins
+    callback(new Error('Not allowed by CORS'))
+  },
+  credentials: true
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(morgan("dev"))
 
