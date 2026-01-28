@@ -16,7 +16,7 @@ const app = express()
 const port = process.env.PORT || 5000
 
 // CORS Configuration
-const clientOrigins = process.env.CLIENT_URL?.split(",").map((url) => url.trim()) || ["http://localhost:5173"] || ["https://wikkiai.com"]
+const clientOrigins = process.env.CLIENT_URL?.split(",").map((url) => url.trim()) || ["http://localhost:5173", "https://wikkiai.com"]
 
 // Enhanced CORS to support Vercel and Netlify preview deployments
 const corsOptions = {
@@ -42,7 +42,12 @@ const corsOptions = {
     // Reject other origins
     callback(new Error('Not allowed by CORS'))
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['set-cookie'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }
 
 app.use(cors(corsOptions))
