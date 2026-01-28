@@ -18,7 +18,7 @@ const port = process.env.PORT || 5000
 // CORS Configuration
 const clientOrigins = process.env.CLIENT_URL?.split(",").map((url) => url.trim()) || ["http://localhost:5173"]
 
-// Enhanced CORS to support Vercel preview deployments
+// Enhanced CORS to support Vercel and Netlify preview deployments
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps, Postman, etc.)
@@ -31,6 +31,11 @@ const corsOptions = {
 
     // Allow all Vercel preview deployments (*.vercel.app)
     if (origin.endsWith('.vercel.app')) {
+      return callback(null, true)
+    }
+
+    // Allow all Netlify preview deployments (*.netlify.app)
+    if (origin.endsWith('.netlify.app')) {
       return callback(null, true)
     }
 
