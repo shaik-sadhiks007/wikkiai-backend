@@ -8,9 +8,11 @@ import Razorpay from "razorpay"
 // const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET
 
 
-const RAZORPAY_KEY_ID = "rzp_test_RpByExv2gBYi8O"
-const RAZORPAY_KEY_SECRET = "L2efg7XU0Y1DyWJ1VkUNMuM1"
+// const RAZORPAY_KEY_ID = "rzp_test_RpByExv2gBYi8O"
+// const RAZORPAY_KEY_SECRET = "L2efg7XU0Y1DyWJ1VkUNMuM1"
 
+const RAZORPAY_KEY_ID = "rzp_live_SGUxonVtt0Ejwt"
+const RAZORPAY_KEY_SECRET = "4bF8DjRAYhN8ghuV6HgX5I7X"
 
 if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
   console.error("⚠️  Razorpay credentials not found in environment variables")
